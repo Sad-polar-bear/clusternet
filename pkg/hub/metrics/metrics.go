@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Clusternet Authors.
+Copyright 2023 The Clusternet Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package metrics
 
 import (
-	"math/rand"
-	"os"
-	"time"
+	"k8s.io/component-base/metrics/legacyregistry"
 
-	"k8s.io/component-base/cli"
-	_ "k8s.io/component-base/logs/json/register" // for JSON log format registration
-
-	"github.com/clusternet/clusternet/cmd/clusternet-agent/app"
-	"github.com/clusternet/clusternet/pkg/utils"
+	"github.com/clusternet/clusternet/pkg/registry/proxies/socket"
 )
 
-func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	command := app.NewClusternetAgentCmd(utils.GracefulStopWithContext())
-	code := cli.Run(command)
-	os.Exit(code)
+func init() {
+	// register clusternet metrics
+	legacyregistry.MustRegister(
+		socket.ConnectionCount,
+		socket.ConnectionDurationSeconds,
+	)
 }

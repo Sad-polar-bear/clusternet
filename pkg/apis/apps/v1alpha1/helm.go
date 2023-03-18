@@ -117,7 +117,7 @@ type HelmOptions struct {
 	// +kubebuilder:default=300
 	TimeoutSeconds int32 `json:"timeoutSeconds,omitempty"`
 
-	// Wait determines whether the wait operation should be performed after the upgrade is requested.
+	// Wait determines whether the wait operation should be performed after helm install, upgrade or uninstall is requested.
 	//
 	// +optional
 	// +kubebuilder:validation:Type=boolean
@@ -147,6 +147,12 @@ type HelmOptions struct {
 	// +optional
 	// +kubebuilder:validation:Type=boolean
 	SkipCRDs *bool `json:"skipCRDs,omitempty"`
+
+	// ReplaceCRDs replace all crds in chart and sub charts before upgrade and install, not working when SkipCRDs true
+	//
+	// +optional
+	// +kubebuilder:validation:Type=boolean
+	ReplaceCRDs *bool `json:"replaceCRDs,omitempty"`
 
 	// DisableHooks disables hook processing if set to true.
 	//

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Clusternet Authors.
+Copyright 2023 The Clusternet Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package utils
+package options
 
 import (
-	"strings"
+	"testing"
 
-	"github.com/spf13/pflag"
+	bootstraputil "k8s.io/cluster-bootstrap/token/util"
 )
 
-// WordSepNormalizeFunc changes all flags with separators from "_"  to "-"
-func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
-	if strings.Contains(name, "_") {
-		return pflag.NormalizedName(strings.Replace(name, "_", "-", -1))
+func TestValidateToken(t *testing.T) {
+	var tests = []struct {
+		token    string
+		expected bool
+	}{
+		{"07401b.f395accd246ae52d", true},
+		{".f395accd246ae52d", false},
+		{"07401b.", false},
+		{"07401b.f395accd246ae52d@foobar", false},
 	}
-	return pflag.NormalizedName(name)
+	for _, bt := range tests {
+		if bootstraputil.IsValidBootstrapToken(bt.token) != bt.expected {
+			t.Errorf("invalid bootstrap token %q", bt.token)
+		}
+	}
 }

@@ -69,6 +69,7 @@ import (
 	shadowapiserver "github.com/clusternet/clusternet/pkg/hub/apiserver/shadow"
 	"github.com/clusternet/clusternet/pkg/hub/approver"
 	"github.com/clusternet/clusternet/pkg/hub/deployer"
+	_ "github.com/clusternet/clusternet/pkg/hub/metrics"
 	"github.com/clusternet/clusternet/pkg/hub/options"
 	"github.com/clusternet/clusternet/pkg/known"
 	"github.com/clusternet/clusternet/pkg/utils"
@@ -186,7 +187,7 @@ func NewHub(opts *options.HubServerOptions) (*Hub, error) {
 	}
 
 	var serviceImportEnabled bool
-	if serviceImportEnabled, err = utils.EndpointSliceV1Promoted(ver.String()); err != nil {
+	if serviceImportEnabled, err = utils.MultiClusterServiceEnabled(ver.String()); err != nil {
 		return nil, err
 	}
 

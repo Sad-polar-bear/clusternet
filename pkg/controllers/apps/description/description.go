@@ -48,7 +48,7 @@ var controllerKind = appsapi.SchemeGroupVersion.WithKind("Description")
 
 type SyncHandlerFunc func(description *appsapi.Description) error
 
-// Controller is a controller that handle Description
+// Controller is a controller that handles Description
 type Controller struct {
 	clusternetClient clusternetClientSet.Interface
 
@@ -79,7 +79,7 @@ func NewController(clusternetClient clusternetClientSet.Interface,
 
 	c := &Controller{
 		clusternetClient: clusternetClient,
-		workqueue:        workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "description"),
+		workqueue:        workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Description"),
 		descLister:       descInformer.Lister(),
 		descSynced:       descInformer.Informer().HasSynced,
 		hrSynced:         hrInformer.Informer().HasSynced,

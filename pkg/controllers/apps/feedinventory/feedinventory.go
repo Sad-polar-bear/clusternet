@@ -51,7 +51,7 @@ var subKind = appsapi.SchemeGroupVersion.WithKind("Subscription")
 // SyncHandlerFunc is the function to sync a Subscription object
 type SyncHandlerFunc func(subscription *appsapi.Subscription) error
 
-// Controller is a controller that handle HelmRelease
+// Controller is a controller that maintains FeedInventory objects
 type Controller struct {
 	clusternetClient clusternetclientset.Interface
 
@@ -85,7 +85,7 @@ func NewController(clusternetClient clusternetclientset.Interface,
 	reservedNamespace string, customSyncHandlerFunc SyncHandlerFunc) (*Controller, error) {
 	c := &Controller{
 		clusternetClient:      clusternetClient,
-		workqueue:             workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "feedInventory"),
+		workqueue:             workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "FeedInventory"),
 		subLister:             subsInformer.Lister(),
 		subSynced:             subsInformer.Informer().HasSynced,
 		finvLister:            finvInformer.Lister(),

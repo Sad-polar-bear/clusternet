@@ -50,7 +50,7 @@ var (
 
 type SyncHandlerFunc func(glob *appsapi.Globalization) error
 
-// Controller is a controller that handle Globalization
+// Controller is a controller that handles Globalization
 type Controller struct {
 	clusternetClient clusternetclientset.Interface
 
@@ -88,7 +88,7 @@ func NewController(clusternetClient clusternetclientset.Interface,
 
 	c := &Controller{
 		clusternetClient:  clusternetClient,
-		workqueue:         workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "globalization"),
+		workqueue:         workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Globalization"),
 		globLister:        globInformer.Lister(),
 		globSynced:        globInformer.Informer().HasSynced,
 		chartLister:       chartInformer.Lister(),
